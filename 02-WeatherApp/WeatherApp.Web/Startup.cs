@@ -8,7 +8,7 @@ namespace WeatherApp.Web
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IWeatherService, WeatherService>();
+            
         }
 
         public void Configure(IComponentsApplicationBuilder app)

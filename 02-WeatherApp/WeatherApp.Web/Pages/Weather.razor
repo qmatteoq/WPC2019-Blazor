@@ -1,5 +1,4 @@
 ﻿@page "/weather"
-@inject IWeatherService WeatherService
 
 <h1>Weather</h1>
 
@@ -40,21 +39,4 @@ else
             }
         </tbody>
     </table>
-}
-
-@code {
-
-    private IEnumerable<WeatherForecast> forecasts;
-
-    private string city = "Seattle";
-
-    protected async override Task OnInitializedAsync()
-    {
-        await GetWeatherForecast();
-    }
-
-    protected async Task GetWeatherForecast()
-    {
-        forecasts = await WeatherService.GetForecast(city);
-    }
 }
