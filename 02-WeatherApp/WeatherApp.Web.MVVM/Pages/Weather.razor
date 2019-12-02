@@ -1,0 +1,44 @@
+﻿@inherits WeatherBase
+@page "/weather"
+@inject WeatherViewModel WeatherViewModel
+
+<h1>Weather</h1>
+
+<input @bind="WeatherViewModel.City" />
+<button class="btn btn-primary" @onclick="WeatherViewModel.GetWeatherForecast">Search</button>
+
+<br />
+
+@if (WeatherViewModel.Forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+                <th>Feeling</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in WeatherViewModel.Forecasts)
+            {
+                <tr>
+                    <td>@forecast.City</td>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                    <td>@forecast.Feeling</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

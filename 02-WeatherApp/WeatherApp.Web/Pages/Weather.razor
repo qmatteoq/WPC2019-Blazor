@@ -1,0 +1,60 @@
+﻿@page "/weather"
+@inject IWeatherService WeatherService
+
+<h1>Weather</h1>
+
+<input @bind="@city" />
+<button class="btn btn-primary" @onclick="GetWeatherForecast">Search</button>
+
+<br />
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+                <th>Feeling</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.City</td>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                    <td>@forecast.Feeling</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private IEnumerable<WeatherForecast> forecasts;
+
+    private string city = "Seattle";
+
+    protected async override Task OnInitializedAsync()
+    {
+        await GetWeatherForecast();
+    }
+
+    protected async Task GetWeatherForecast()
+    {
+        forecasts = await WeatherService.GetForecast(city);
+    }
+}
